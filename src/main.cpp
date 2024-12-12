@@ -28,8 +28,8 @@ int main(int argc, char *argv[]){
   sf::Vector2u err;
   if(!are_equal(s1, i1, i2, err)){
     std::cout<<"Found difference at:"<<string_of(err)<<"\n";
-    std::cout<<string_of(i2.getPixel(err.x, err.y))<<" for "<<argv[2]<<'\n';
     std::cout<<string_of(i1.getPixel(err.x, err.y))<<" for "<<argv[1]<<'\n';
+    std::cout<<string_of(i2.getPixel(err.x, err.y))<<" for "<<argv[2]<<'\n';
     return -3;
   }
 
