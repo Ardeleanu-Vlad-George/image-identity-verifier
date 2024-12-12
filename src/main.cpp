@@ -1,26 +1,7 @@
 #include <iostream>
-#include <string>
-#include <cstdio>
 #include <SFML/Graphics.hpp>
+#include "io.hpp"
 
-std::string string_of(int x, int y){
-  return "("+std::to_string(x)+","+std::to_string(y)+")";
-}
-
-std::string string_of(sf::Vector2u v2u){
-  return string_of(v2u.x, v2u.y);
-}
-
-std::string string_of(sf::Color clr){
-  char hex_rgb[211];
-  sprintf(
-    hex_rgb, 
-    "[#%02x%02x%02x at opac:%05.2lf%%]",
-    clr.r, clr.g, clr.b, 
-    100.*clr.a/255.
-  );
-  return std::string(hex_rgb);
-}
 
 int main(int argc, char *argv[]){
   if(3 != argc){
@@ -47,7 +28,7 @@ int main(int argc, char *argv[]){
   for(int i=0; i < x; i++)
     for(int j=0; j < y; j++)
       if(d1[i*x+j]!=d2[i*x+j]){
-        std::cout<<"Found difference at:"<<string_of(i,j)<<"\n";
+        std::cout<<"Found difference at:"<<string_of(sf::Vector2u(i,j))<<"\n";
         std::cout<<string_of(i1.getPixel(i, j))<<" for "<<argv[1]<<'\n';
         std::cout<<string_of(i2.getPixel(i, j))<<" for "<<argv[2]<<'\n';
         return -3;
