@@ -8,4 +8,4 @@ $(OBJ): obj/%.o : src/%.cpp
 	g++ -I inc/ -c -std=c++98 -o $@ $^
 
 clean:
-	rm $(OBJ) $(TRG)
+	rm $(OBJ) 
