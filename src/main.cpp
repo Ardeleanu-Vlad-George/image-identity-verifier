@@ -2,14 +2,18 @@
 #include <SFML/Graphics.hpp>
 #include "io.hpp"
 #include "comp.hpp"
+#include "defs.hpp"
+#include <cstring>
 
 
 int main(int argc, char *argv[]){
-  if(3 != argc){
-    std::cout<<"Invalid number of arguments.\n";
-    std::cout<<"Two are needed.\n";
-    std::cout<<"\tFirst image that is compared.\n";
-    std::cout<<"\tSecond image that is compared.\n";
+  if(2 == argc && 0 == strcmp(HELP_STR, argv[1])){
+    log_help(std::clog);
+    return 1;
+  }
+
+  if(CLA_ARG_COUNT != argc-1){
+    log_cla_err(std::clog, argc-1, CLA_ARG_COUNT);
     return -1;
   }
 
@@ -19,20 +23,16 @@ int main(int argc, char *argv[]){
   sf::Vector2u s1=i1.getSize(), s2=i2.getSize(); 
 
   if(s1 != s2){
-    std::cout<<"Images are not equal. Sizes differ.\n";
-    std::cout<<string_of(s1)<<" for "<<argv[1]<<'\n';
-    std::cout<<string_of(s2)<<" for "<<argv[2]<<'\n';
+    log_size_err(std::clog, argv[1], s1, argv[2], s2);
     return -2;
   }
 
   sf::Vector2u err;
   if(!are_equal(s1, i1, i2, err)){
-    std::cout<<"Found difference at:"<<string_of(err)<<"\n";
-    std::cout<<string_of(i1.getPixel(err.x, err.y))<<" for "<<argv[1]<<'\n';
-    std::cout<<string_of(i2.getPixel(err.x, err.y))<<" for "<<argv[2]<<'\n';
+    log_pixel_err(std::clog, err, argv[1], i1, argv[2], i2);
     return -3;
   }
 
-  std::cout<<"All checks passed. Images are equal.\n";
+  log_succes(std::cout);
   return 0;
 }
